@@ -2,6 +2,7 @@ package com.blueharvest.spi.repository;
 
 import com.blueharvest.BlueHarvestApp;
 import com.blueharvest.spi.Account;
+import com.blueharvest.spi.Transaction;
 import com.blueharvest.spi.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 @ExtendWith(SpringExtension.class)
 @ComponentScan(basePackages = {"com.blueharvest"})
 @DataJpaTest
@@ -21,21 +25,30 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class UserRepositoryTest {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository users;
+    @Autowired
+    private AccountRepository accounts;
 
     @Test
     void testReporitory() {
-        Assertions.assertThat(repository.count()).isZero();
+        Assertions.assertThat(users.count()).isZero();
         var user = new User();
         user.setName("user");
-        var saved = repository.save(user);
-        Assertions.assertThat(repository.count()).isOne();
+        var saved = users.save(user);
+        Assertions.assertThat(users.count()).isOne();
         var account = new Account("account");
+        account.setBalance(BigDecimal.TEN);
         user.addAccount(account);
-        saved = repository.save(user);
+        saved = users.save(user);
         Assertions.assertThat(saved)
                 .isNotNull();
-        var list = saved.getAccounts();
+        List<Account> list = saved.getAccounts();
         Assertions.assertThat(list).hasSize(1);
+        account = list.getFirst();
+        Assertions.assertThat(account.getBalance()).isEqualTo(BigDecimal.TEN);
+        var balance = account.addTransaction(new Transaction("description", BigDecimal.ONE));
+        Assertions.assertThat(balance).isEqualTo(new BigDecimal(11));
+        account = accounts.save(account);
+        Assertions.assertThat(account.getBalance()).isEqualTo(new BigDecimal(11));
     }
 }
