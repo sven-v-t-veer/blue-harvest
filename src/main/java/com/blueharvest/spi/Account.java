@@ -2,7 +2,6 @@ package com.blueharvest.spi;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -13,7 +12,6 @@ import java.util.UUID;
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,15 +19,13 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    private String name;
     private BigDecimal balance;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private List<Transaction> transactions;
 
-    public Account(String name) {
-        this.name = name;
+    public Account() {
         this.balance = BigDecimal.ZERO;
     }
 
@@ -37,8 +33,6 @@ public class Account {
         if (transactions == null) {
             transactions = new ArrayList<>();
         }
-        BigDecimal value = transaction.getAmount();
-        balance = value.compareTo(BigDecimal.ZERO) < 0 ? balance.subtract(value) : balance.add(value);
         transactions.add(transaction);
         return balance;
     }

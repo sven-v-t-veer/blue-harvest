@@ -36,7 +36,7 @@ public class UserRepositoryTest {
         user.setName("user");
         var saved = users.save(user);
         Assertions.assertThat(users.count()).isOne();
-        var account = new Account("account");
+        var account = new Account();
         account.setBalance(BigDecimal.TEN);
         user.addAccount(account);
         saved = users.save(user);
@@ -47,8 +47,8 @@ public class UserRepositoryTest {
         account = list.getFirst();
         Assertions.assertThat(account.getBalance()).isEqualTo(BigDecimal.TEN);
         var balance = account.addTransaction(new Transaction("description", BigDecimal.ONE));
-        Assertions.assertThat(balance).isEqualTo(new BigDecimal(11));
+        Assertions.assertThat(balance).isEqualTo(new BigDecimal(10));
         account = accounts.save(account);
-        Assertions.assertThat(account.getBalance()).isEqualTo(new BigDecimal(11));
+        Assertions.assertThat(account.getBalance()).isEqualTo(new BigDecimal(10));
     }
 }
