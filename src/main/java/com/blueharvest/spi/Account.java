@@ -29,6 +29,13 @@ public class Account {
         this.balance = BigDecimal.ZERO;
     }
 
+    public Account(BigDecimal balance) {
+        if (balance == null) {
+            balance = BigDecimal.ZERO;
+        }
+        this.balance = balance;
+    }
+
     public BigDecimal addTransaction(Transaction transaction) {
         if (transactions == null) {
             transactions = new ArrayList<>();

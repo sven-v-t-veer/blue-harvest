@@ -66,5 +66,9 @@ public class AccountServiceIntegrationTest {
                 .hasFieldOrPropertyWithValue("balance", BigDecimal.TEN)
                 .hasFieldOrProperty("accountId");
         Assertions.assertThat(account.getTransactions()).hasSize(1);
+        var transaction = account.getTransactions().getFirst();
+        Assertions.assertThat(transaction)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("amount", BigDecimal.TEN);
     }
 }
