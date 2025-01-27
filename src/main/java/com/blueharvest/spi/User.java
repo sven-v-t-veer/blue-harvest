@@ -2,6 +2,7 @@ package com.blueharvest.spi;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -18,6 +20,10 @@ public class User {
     private String name;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Account> accounts;
+
+    public User(String name) {
+        this.name = name;
+    }
 
     public void addAccount(Account account) {
         if (accounts == null) {

@@ -10,4 +10,5 @@ public interface UserService {
 
     User getUser(UUID userId) throws UserNotFoundException;
     User addAccount(UUID usedId, Account account) throws UserNotFoundException;
+    User createUser(String name);
 }
