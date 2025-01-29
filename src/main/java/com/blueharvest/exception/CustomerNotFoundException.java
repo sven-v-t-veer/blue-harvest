@@ -2,9 +2,9 @@ package com.blueharvest.exception;
 
 import java.util.UUID;
 
-public class UserNotFoundException extends Exception {
+public class CustomerNotFoundException extends Exception {
     private final UUID customerId;
-    public UserNotFoundException(UUID customerId) {
+    public CustomerNotFoundException(UUID customerId) {
         this.customerId = customerId;
     }
 

@@ -2,7 +2,7 @@ package com.blueharvest.service.impl;
 
 import com.blueharvest.BlueHarvestApp;
 import com.blueharvest.exception.AccountNotFoundException;
-import com.blueharvest.exception.UserNotFoundException;
+import com.blueharvest.exception.CustomerNotFoundException;
 import com.blueharvest.service.AccountService;
 import com.blueharvest.service.CustomerService;
 import org.assertj.core.api.Assertions;
@@ -34,11 +34,11 @@ public class AccountServiceIntegrationTest {
 
     @Test
     void testCreateAccountUserNotFoundException() {
-        Assertions.assertThatThrownBy(() -> accounts.createAccount(UUID.randomUUID(), BigDecimal.TEN)).isInstanceOf(UserNotFoundException.class);
+        Assertions.assertThatThrownBy(() -> accounts.createAccount(UUID.randomUUID(), BigDecimal.TEN)).isInstanceOf(CustomerNotFoundException.class);
     }
 
     @Test
-    void testCreateAccountNullInitialBalance() throws UserNotFoundException, AccountNotFoundException {
+    void testCreateAccountNullInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
         var user = users.createUser("test user");
         var account = accounts.createAccount(user.getCustomerId(), null);
         Assertions.assertThat(account)
@@ -48,7 +48,7 @@ public class AccountServiceIntegrationTest {
     }
 
     @Test
-    void testCreateAccountZeroInitialBalance() throws UserNotFoundException, AccountNotFoundException {
+    void testCreateAccountZeroInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
         var user = users.createUser("test user");
         var account = accounts.createAccount(user.getCustomerId(), BigDecimal.ZERO);
         Assertions.assertThat(account)
@@ -58,7 +58,7 @@ public class AccountServiceIntegrationTest {
     }
 
     @Test
-    void testCreateAccountTenInitialBalance() throws UserNotFoundException, AccountNotFoundException {
+    void testCreateAccountTenInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
         var user = users.createUser("test user");
         var account = accounts.createAccount(user.getCustomerId(), BigDecimal.TEN);
         Assertions.assertThat(account)

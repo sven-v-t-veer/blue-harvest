@@ -1,7 +1,7 @@
 package com.blueharvest.rest;
 
 import com.blueharvest.domain.CustomerDto;
-import com.blueharvest.exception.UserNotFoundException;
+import com.blueharvest.exception.CustomerNotFoundException;
 import com.blueharvest.service.CustomerService;
 import com.blueharvest.spi.Customer;
 import jakarta.transaction.Transactional;
@@ -31,7 +31,7 @@ public class AccountsRestController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping({"/customer/{customer_id}/", "/customer/{customer_id}"})
-    CustomerDto createAccountUser(@PathVariable(name = "customer_id") UUID customerId) throws UserNotFoundException {
+    CustomerDto createAccountUser(@PathVariable(name = "customer_id") UUID customerId) throws CustomerNotFoundException {
         return customerDataMapper.map(customers.getCustomer(customerId));
     }
 

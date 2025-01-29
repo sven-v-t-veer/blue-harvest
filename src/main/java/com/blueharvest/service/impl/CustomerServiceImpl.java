@@ -1,6 +1,6 @@
 package com.blueharvest.service.impl;
 
-import com.blueharvest.exception.UserNotFoundException;
+import com.blueharvest.exception.CustomerNotFoundException;
 import com.blueharvest.service.CustomerService;
 import com.blueharvest.spi.Account;
 import com.blueharvest.spi.Customer;
@@ -26,12 +26,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomer(UUID customerId) throws UserNotFoundException {
-        return users.findById(customerId).orElseThrow(() -> new UserNotFoundException(customerId));
+    public Customer getCustomer(UUID customerId) throws CustomerNotFoundException {
+        return users.findById(customerId).orElseThrow(() -> new CustomerNotFoundException(customerId));
     }
 
     @Override
-    public Customer addAccount(UUID customerId, Account account) throws UserNotFoundException {
+    public Customer addAccount(UUID customerId, Account account) throws CustomerNotFoundException {
         var user = getCustomer(customerId);
         user.addAccount(account);
         return users.save(user);

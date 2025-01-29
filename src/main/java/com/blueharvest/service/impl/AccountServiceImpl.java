@@ -1,7 +1,7 @@
 package com.blueharvest.service.impl;
 
 import com.blueharvest.exception.AccountNotFoundException;
-import com.blueharvest.exception.UserNotFoundException;
+import com.blueharvest.exception.CustomerNotFoundException;
 import com.blueharvest.service.AccountService;
 import com.blueharvest.service.CustomerService;
 import com.blueharvest.spi.Account;
@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account createAccount(UUID customerId, BigDecimal initialBalance) throws UserNotFoundException, AccountNotFoundException {
+    public Account createAccount(UUID customerId, BigDecimal initialBalance) throws CustomerNotFoundException, AccountNotFoundException {
         var account = accounts.save(new Account(initialBalance));
         var accountId = account.getAccountId();
         if (initialBalance != null && !initialBalance.equals(BigDecimal.ZERO)) {
