@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @Setter
 @Getter
-@SuppressWarnings("javaarchitecture:S7027")
+@SuppressWarnings("javaarchitecture:S7027") // Account has Customer
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

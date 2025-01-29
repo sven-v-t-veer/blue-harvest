@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@SuppressWarnings("javaarchitecture:S7027")
+@SuppressWarnings("javaarchitecture:S7027") // Customer has Accounts
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,7 +31,7 @@ public class Customer {
             accounts = new ArrayList<>();
         }
         accounts.add(account);
-        account.setUser(this);
+        account.setCustomer(this);
     }
 
 }
