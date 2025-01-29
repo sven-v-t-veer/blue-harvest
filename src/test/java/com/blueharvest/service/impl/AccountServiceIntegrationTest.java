@@ -4,7 +4,7 @@ import com.blueharvest.BlueHarvestApp;
 import com.blueharvest.exception.AccountNotFoundException;
 import com.blueharvest.exception.UserNotFoundException;
 import com.blueharvest.service.AccountService;
-import com.blueharvest.service.UserService;
+import com.blueharvest.service.CustomerService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ public class AccountServiceIntegrationTest {
     private AccountService accounts;
 
     @Autowired
-    private UserService users;
+    private CustomerService users;
 
 
     @Test
@@ -40,7 +40,7 @@ public class AccountServiceIntegrationTest {
     @Test
     void testCreateAccountNullInitialBalance() throws UserNotFoundException, AccountNotFoundException {
         var user = users.createUser("test user");
-        var account = accounts.createAccount(user.getUserId(), null);
+        var account = accounts.createAccount(user.getCustomerId(), null);
         Assertions.assertThat(account)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("balance", BigDecimal.ZERO)
@@ -50,7 +50,7 @@ public class AccountServiceIntegrationTest {
     @Test
     void testCreateAccountZeroInitialBalance() throws UserNotFoundException, AccountNotFoundException {
         var user = users.createUser("test user");
-        var account = accounts.createAccount(user.getUserId(), BigDecimal.ZERO);
+        var account = accounts.createAccount(user.getCustomerId(), BigDecimal.ZERO);
         Assertions.assertThat(account)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("balance", BigDecimal.ZERO)
@@ -60,7 +60,7 @@ public class AccountServiceIntegrationTest {
     @Test
     void testCreateAccountTenInitialBalance() throws UserNotFoundException, AccountNotFoundException {
         var user = users.createUser("test user");
-        var account = accounts.createAccount(user.getUserId(), BigDecimal.TEN);
+        var account = accounts.createAccount(user.getCustomerId(), BigDecimal.TEN);
         Assertions.assertThat(account)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("balance", BigDecimal.TEN)

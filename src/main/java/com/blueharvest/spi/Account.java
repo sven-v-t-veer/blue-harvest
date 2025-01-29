@@ -18,7 +18,7 @@ public class Account {
     private UUID accountId;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Customer user;
     private BigDecimal balance;
 
     @OneToMany(cascade = CascadeType.ALL)

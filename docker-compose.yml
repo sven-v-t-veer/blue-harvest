@@ -1,0 +1,8 @@
+services:
+  blue-harvest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blue-harvest
+    ports:
+      - "8080:8080"

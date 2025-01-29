@@ -15,7 +15,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_id_generator")
     @SequenceGenerator(name = "transaction_id_generator", sequenceName = "transaction_id_seq", allocationSize = 1)
-    private Long id;
+    private Long transactionId;
     private String name;
     private BigDecimal amount;
 

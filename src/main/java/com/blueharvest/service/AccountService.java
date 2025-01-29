@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface AccountService {
 
-    Account createAccount(UUID userId, BigDecimal initialBalance) throws UserNotFoundException, AccountNotFoundException;
+    Account createAccount(UUID customerId, BigDecimal initialBalance) throws UserNotFoundException, AccountNotFoundException;
 }

@@ -3,17 +3,21 @@ package com.blueharvest.domain;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AccountDto {
-    private UUID accountId;
+public class CustomerDto {
     private UUID customerId;
-    private String accountName;
-    private BigDecimal balance;
+    private String name;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<AccountDto> accounts = new ArrayList<>();
 }

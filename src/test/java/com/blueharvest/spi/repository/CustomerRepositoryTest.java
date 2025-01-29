@@ -3,7 +3,7 @@ package com.blueharvest.spi.repository;
 import com.blueharvest.BlueHarvestApp;
 import com.blueharvest.spi.Account;
 import com.blueharvest.spi.Transaction;
-import com.blueharvest.spi.User;
+import com.blueharvest.spi.Customer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,24 +22,24 @@ import java.util.List;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = BlueHarvestApp.class)
-public class UserRepositoryTest {
+public class CustomerRepositoryTest {
 
     @Autowired
-    private UserRepository users;
+    private CustomerRepository customers;
     @Autowired
     private AccountRepository accounts;
 
     @Test
     void testReporitory() {
-        Assertions.assertThat(users.count()).isZero();
-        var user = new User();
+        Assertions.assertThat(customers.count()).isZero();
+        var user = new Customer();
         user.setName("user");
-        var saved = users.save(user);
-        Assertions.assertThat(users.count()).isOne();
+        var saved = customers.save(user);
+        Assertions.assertThat(customers.count()).isOne();
         var account = new Account();
         account.setBalance(BigDecimal.TEN);
         user.addAccount(account);
-        saved = users.save(user);
+        saved = customers.save(user);
         Assertions.assertThat(saved)
                 .isNotNull();
         List<Account> list = saved.getAccounts();

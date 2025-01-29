@@ -43,4 +43,6 @@ spring:
     password: password
 logging:
   level:
-    root: debug
+    root: info
+    com:
+      blueharvest: debug

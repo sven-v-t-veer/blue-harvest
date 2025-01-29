@@ -13,15 +13,15 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID userId;
+    private UUID customerId;
     private String name;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Account> accounts;
 
-    public User(String name) {
+    public Customer(String name) {
         this.name = name;
     }
 

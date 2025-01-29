@@ -3,12 +3,12 @@ package com.blueharvest.exception;
 import java.util.UUID;
 
 public class UserNotFoundException extends Exception {
-    private final UUID userId;
-    public UserNotFoundException(UUID userId) {
-        this.userId = userId;
+    private final UUID customerId;
+    public UserNotFoundException(UUID customerId) {
+        this.customerId = customerId;
     }
 
     public String getMessage() {
-        return "Unable to find a user with id: " + userId.toString();
+        return "Unable to find a user with id: " + customerId.toString();
     }
 }
