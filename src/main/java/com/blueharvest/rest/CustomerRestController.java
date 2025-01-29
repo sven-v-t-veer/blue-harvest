@@ -20,26 +20,26 @@ import java.util.UUID;
 @Transactional
 public class CustomerRestController {
 
-    private final CustomerService users;
-    private final TypeMap<Customer, CustomerDto> userDataMapper;
+    private final CustomerService customers;
+    private final TypeMap<Customer, CustomerDto> customerDataMapper;
     private final RestExceptionHandler handler;
 
-    public CustomerRestController(CustomerService users, TypeMap<Customer, CustomerDto> userDataMapper, RestExceptionHandler handler) {
-        this.users = users;
-        this.userDataMapper = userDataMapper;
+    public CustomerRestController(CustomerService customers, TypeMap<Customer, CustomerDto> customerDataMapper, RestExceptionHandler handler) {
+        this.customers = customers;
+        this.customerDataMapper = customerDataMapper;
         this.handler = handler;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping({"/customer/", "/customer"})
     CustomerDto createCustomer(@RequestParam(name = "user_name") String userName) {
-        return userDataMapper.map(users.createUser(userName));
+        return customerDataMapper.map(customers.createUser(userName));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping({"/user/{customer_id}/", "/customer/{customer_id}"})
-    CustomerDto getCustomer(@PathVariable(name = "user_id") UUID customerId) throws CustomerNotFoundException {
-        return userDataMapper.map(users.getCustomer(customerId));
+    @GetMapping({"/customer/{customer_id}/", "/customer/{customer_id}"})
+    CustomerDto getCustomer(@PathVariable(name = "customer_id") UUID customerId) throws CustomerNotFoundException {
+        return customerDataMapper.map(customers.getCustomer(customerId));
     }
 
     @ExceptionHandler(CustomerNotFoundException.class)
