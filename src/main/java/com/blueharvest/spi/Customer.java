@@ -13,12 +13,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@SuppressWarnings("javaarchitecture:S7027")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID customerId;
     private String name;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Account> accounts;
 
     public Customer(String name) {

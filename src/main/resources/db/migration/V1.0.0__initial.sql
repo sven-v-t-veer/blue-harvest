@@ -8,7 +8,7 @@ create table customer (
 
 create table account (
     account_id uuid,
-    user_id uuid,
+    customer_id uuid,
     balance numeric (6,2) not null,
     primary key (account_id)
 );

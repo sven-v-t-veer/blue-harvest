@@ -23,7 +23,7 @@ import java.util.UUID;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = BlueHarvestApp.class)
-public class AccountServiceIntegrationTest {
+class AccountServiceIntegrationTest {
 
     @Autowired
     private AccountService accounts;

@@ -22,7 +22,7 @@ import java.util.List;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = BlueHarvestApp.class)
-public class CustomerRepositoryTest {
+class CustomerRepositoryTest {
 
     @Autowired
     private CustomerRepository customers;
@@ -34,12 +34,12 @@ public class CustomerRepositoryTest {
         Assertions.assertThat(customers.count()).isZero();
         var user = new Customer();
         user.setName("user");
-        var saved = customers.save(user);
+        customers.save(user);
         Assertions.assertThat(customers.count()).isOne();
         var account = new Account();
         account.setBalance(BigDecimal.TEN);
         user.addAccount(account);
-        saved = customers.save(user);
+        var saved = customers.save(user);
         Assertions.assertThat(saved)
                 .isNotNull();
         List<Account> list = saved.getAccounts();
