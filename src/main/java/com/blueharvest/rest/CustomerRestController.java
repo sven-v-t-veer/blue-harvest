@@ -32,13 +32,13 @@ public class CustomerRestController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping({"/customer/", "/customer"})
-    CustomerDto createCustomer(@RequestParam(name = "user_name") String userName) {
+    CustomerDto createCustomer(@RequestParam(name = "userName") String userName) {
         return customerDataMapper.map(customers.createUser(userName));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping({"/customer/{customer_id}/", "/customer/{customer_id}"})
-    CustomerDto getCustomer(@PathVariable(name = "customer_id") UUID customerId) throws CustomerNotFoundException {
+    @GetMapping({"/customer/{customerId}/", "/customer/{customerId}"})
+    CustomerDto getCustomer(@PathVariable(name = "customerId") UUID customerId) throws CustomerNotFoundException {
         return customerDataMapper.map(customers.getCustomer(customerId));
     }
 

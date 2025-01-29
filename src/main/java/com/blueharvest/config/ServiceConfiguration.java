@@ -1,6 +1,8 @@
 package com.blueharvest.config;
 
+import com.blueharvest.domain.AccountDto;
 import com.blueharvest.domain.CustomerDto;
+import com.blueharvest.spi.Account;
 import com.blueharvest.spi.Customer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -40,5 +42,10 @@ public class ServiceConfiguration {
     @Bean
     public TypeMap<Customer, CustomerDto> customerDataMapper() {
         return modelMapper().createTypeMap(Customer.class, CustomerDto.class);
+    }
+
+    @Bean
+    public TypeMap<Account, AccountDto> accountDataMapper() {
+        return modelMapper().createTypeMap(Account.class, AccountDto.class);
     }
 }
