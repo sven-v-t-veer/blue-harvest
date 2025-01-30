@@ -3,8 +3,10 @@ package com.blueharvest.service.impl;
 import com.blueharvest.BlueHarvestApp;
 import com.blueharvest.exception.AccountNotFoundException;
 import com.blueharvest.exception.CustomerNotFoundException;
+import com.blueharvest.exception.InsufficientFundsException;
 import com.blueharvest.service.AccountService;
 import com.blueharvest.service.CustomerService;
+import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +33,7 @@ class AccountServiceIntegrationTest {
     private AccountService accounts;
 
     @Autowired
-    private CustomerService users;
+    private CustomerService customers;
 
 
     @Test
@@ -41,8 +43,8 @@ class AccountServiceIntegrationTest {
 
     @Test
     void testCreateAccountNullInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
-        var user = users.createUser("test user", "test user");
-        var account = accounts.createAccount(user.getCustomerId(), null);
+        var customer = customers.createCustomer("test user", "test user");
+        var account = accounts.createAccount(customer.getCustomerId(), null);
         Assertions.assertThat(account)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("balance", BigDecimal.ZERO)
@@ -51,18 +53,19 @@ class AccountServiceIntegrationTest {
 
     @Test
     void testCreateAccountZeroInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
-        var user = users.createUser("test user", "test user");
-        var account = accounts.createAccount(user.getCustomerId(), BigDecimal.ZERO);
+        var customer = customers.createCustomer("test user", "test user");
+        var account = accounts.createAccount(customer.getCustomerId(), BigDecimal.ZERO);
         Assertions.assertThat(account)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("balance", BigDecimal.ZERO)
                 .hasFieldOrProperty("accountId");
     }
 
+
     @Test
     void testCreateAccountTenInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
-        var user = users.createUser("test user", "test user");
-        var account = accounts.createAccount(user.getCustomerId(), BigDecimal.TEN);
+        var customer = customers.createCustomer("test user", "test user");
+        var account = accounts.createAccount(customer.getCustomerId(), BigDecimal.TEN);
         Assertions.assertThat(account)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("balance", BigDecimal.TEN)
@@ -72,5 +75,33 @@ class AccountServiceIntegrationTest {
         Assertions.assertThat(transaction)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("amount", BigDecimal.TEN);
+    }
+
+    @SneakyThrows
+    @Test
+    void testCreateAccountTenInitialBalanceWithdraw1Deposit1Withdraw10WithdrawToThrow() {
+        var customer = customers.createCustomer("test user", "test user");
+        var customerId = customer.getCustomerId();
+        var account = accounts.createAccount(customerId, BigDecimal.TEN);
+        var accountId = account.getAccountId();
+        Assertions.assertThat(account)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("balance", BigDecimal.TEN)
+                .hasFieldOrProperty("accountId");
+        Assertions.assertThat(account.getTransactions()).hasSize(1);
+        var transaction = account.getTransactions().getFirst();
+        Assertions.assertThat(transaction)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("amount", BigDecimal.TEN);
+        account = accounts.withdraw(customerId, accountId, "withdraw", BigDecimal.ONE);
+        Assertions.assertThat(account.getTransactions()).hasSize(2);
+        Assertions.assertThat(account.getBalance()).isEqualTo(BigDecimal.valueOf(9L));
+        account = accounts.deposit(customerId, accountId, "deposit", BigDecimal.ONE);
+        Assertions.assertThat(account.getTransactions()).hasSize(3);
+        Assertions.assertThat(account.getBalance()).isEqualTo(BigDecimal.TEN);
+        account = accounts.withdraw(customerId, accountId, "withdraw", BigDecimal.TEN);
+        Assertions.assertThat(account.getTransactions()).hasSize(4);
+        Assertions.assertThat(account.getBalance()).isEqualTo(BigDecimal.ZERO);
+        Assertions.assertThatThrownBy(() -> accounts.withdraw(customerId, accountId, "withdraw", BigDecimal.TEN)).isInstanceOf(InsufficientFundsException.class);
     }
 }
