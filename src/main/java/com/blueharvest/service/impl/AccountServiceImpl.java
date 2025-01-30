@@ -6,6 +6,7 @@ import com.blueharvest.exception.CustomerNotFoundException;
 import com.blueharvest.exception.InsufficientFundsException;
 import com.blueharvest.service.AccountService;
 import com.blueharvest.service.CustomerService;
+import com.blueharvest.service.TransactionService;
 import com.blueharvest.spi.Account;
 import com.blueharvest.spi.Transaction;
 import com.blueharvest.spi.repository.AccountRepository;
@@ -21,10 +22,12 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accounts;
     private final CustomerService users;
+    private final TransactionService transactions;
 
-    public AccountServiceImpl(AccountRepository accounts, CustomerService users) {
+    public AccountServiceImpl(AccountRepository accounts, CustomerService users, TransactionService transactions) {
         this.accounts = accounts;
         this.users = users;
+        this.transactions = transactions;
     }
 
     @Override
@@ -46,8 +49,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account deposit(UUID customerId, UUID accountId, String description, BigDecimal amount) throws CustomerNotFoundException, AccountNotFoundException {
         var account = getAccount(customerId, accountId);
-        var text = description != null ? description : "";
-        account.addTransaction(new Transaction(TransactionType.deposit, text, amount));
+        account.addTransaction(transactions.deposit(description, amount));
         account.setBalance(account.getBalance().add(amount));
         return accounts.save(account);
     }
@@ -55,11 +57,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account withdraw(UUID customerId, UUID accountId, String description, BigDecimal amount) throws CustomerNotFoundException, AccountNotFoundException, InsufficientFundsException {
         var account = getAccount(customerId, accountId);
-        if (amount.compareTo(account.getBalance()) < 0) {
+        if (account.getBalance().compareTo(amount) < 0) {
             throw new InsufficientFundsException(accountId);
         }
-        var text = description != null ? description : "";
-        account.addTransaction(new Transaction(TransactionType.withdraw, text, amount));
+        account.addTransaction(transactions.withdraw(description, amount));
         account.setBalance(account.getBalance().subtract(amount));
         return accounts.save(account);
     }
