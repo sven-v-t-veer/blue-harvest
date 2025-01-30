@@ -1,0 +1,331 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080/gg
+  description: Generated server url
+paths:
+  /api/customer/{customerId}/account/{accountId}/withdraw/:
+    post:
+      tags:
+      - account-rest-controller
+      operationId: withdraw
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: description
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: amount
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AccountDto"
+  /api/customer/{customerId}/account/{accountId}/withdraw:
+    post:
+      tags:
+      - account-rest-controller
+      operationId: withdraw_1
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: description
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: amount
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AccountDto"
+  /api/customer/{customerId}/account/{accountId}/deposit/:
+    post:
+      tags:
+      - account-rest-controller
+      operationId: deposit
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: description
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: amount
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AccountDto"
+  /api/customer/{customerId}/account/{accountId}/deposit:
+    post:
+      tags:
+      - account-rest-controller
+      operationId: deposit_1
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: description
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: amount
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AccountDto"
+  /api/customer/{customerId}/account:
+    post:
+      tags:
+      - account-rest-controller
+      operationId: createAccount
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: initialCredit
+        in: query
+        required: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AccountDto"
+  /api/customer/{customerId}/account/:
+    post:
+      tags:
+      - account-rest-controller
+      operationId: createAccount_1
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: initialCredit
+        in: query
+        required: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AccountDto"
+  /api/customer/:
+    post:
+      tags:
+      - customer-rest-controller
+      operationId: createCustomer
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: surname
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CustomerDto"
+  /api/customer:
+    post:
+      tags:
+      - customer-rest-controller
+      operationId: createCustomer_1
+      parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: surname
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CustomerDto"
+  /api/customer/{customerId}/:
+    get:
+      tags:
+      - customer-rest-controller
+      operationId: getCustomer
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CustomerDto"
+  /api/customer/{customerId}:
+    get:
+      tags:
+      - customer-rest-controller
+      operationId: getCustomer_1
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CustomerDto"
+components:
+  schemas:
+    AccountDto:
+      type: object
+      properties:
+        account_id:
+          type: string
+          format: uuid
+        customer_id:
+          type: string
+          format: uuid
+        account_name:
+          type: string
+        balance:
+          type: number
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/TransactionDto"
+    TransactionDto:
+      type: object
+      properties:
+        transaction_id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum:
+          - DEPOSIT
+          - WITHDRAW
+        description:
+          type: string
+        amount:
+          type: number
+        ts:
+          type: string
+          format: date-time
+    CustomerDto:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        surname:
+          type: string
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccountDto"

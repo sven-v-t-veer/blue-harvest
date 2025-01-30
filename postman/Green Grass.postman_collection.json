@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "b7c3f27c-7874-4f33-8fbf-07015d19071f",
-		"name": "Blue Harvest",
+		"name": "Green Grass",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9303244"
 	},
@@ -20,14 +20,14 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/bh/api/customer/337b1ef9-5a9b-45d4-8660-597360bb229a/account/?initialCredit=100.50",
+					"raw": "http://localhost:8080/gg/api/customer/337b1ef9-5a9b-45d4-8660-597360bb229a/account/?initialCredit=100.50",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"bh",
+						"gg",
 						"api",
 						"customer",
 						"337b1ef9-5a9b-45d4-8660-597360bb229a",
@@ -58,14 +58,14 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/bh/api/customer/012dbfd6-c2de-451c-8112-52497416a49b/account/acb97f69-40b0-4757-ad3a-3621f2e60e8d/deposit/?description=test deposit&amount=10.50",
+					"raw": "http://localhost:8080/gg/api/customer/012dbfd6-c2de-451c-8112-52497416a49b/account/acb97f69-40b0-4757-ad3a-3621f2e60e8d/deposit/?description=test deposit&amount=10.50",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"bh",
+						"gg",
 						"api",
 						"customer",
 						"012dbfd6-c2de-451c-8112-52497416a49b",
@@ -94,14 +94,14 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/bh/api/customer/012dbfd6-c2de-451c-8112-52497416a49b/account/acb97f69-40b0-4757-ad3a-3621f2e60e8d/withdraw/?description=test withdrawal&amount=50",
+					"raw": "http://localhost:8080/gg/api/customer/012dbfd6-c2de-451c-8112-52497416a49b/account/acb97f69-40b0-4757-ad3a-3621f2e60e8d/withdraw/?description=test withdrawal&amount=50",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"bh",
+						"gg",
 						"api",
 						"customer",
 						"012dbfd6-c2de-451c-8112-52497416a49b",
