@@ -44,16 +44,6 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
     }
 
-    ResponseEntity<Object> handleNoContent(Exception ex, WebRequest request) {
-        var error = new ApiError(HttpStatus.NO_CONTENT, request.getContextPath(), ex.getMessage(), Instant.now());
-        try {
-            log.warn("HttpError: No Content. {}", mapper.writerWithDefaultPrettyPrinter().writeValueAsString(error), ex);
-        } catch (JsonProcessingException e) {
-            //ignore, it's just logging
-        }
-        return new ResponseEntity<>(error, new HttpHeaders(), error.getStatus());
-    }
-
     public ResponseEntity<Object> handleNotFound(Exception ex, WebRequest request) {
         var error = new ApiError(HttpStatus.NOT_FOUND, request.getContextPath(), ex.getMessage(), Instant.now());
         try {

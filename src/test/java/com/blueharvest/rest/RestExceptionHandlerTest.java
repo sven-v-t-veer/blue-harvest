@@ -45,18 +45,6 @@ class RestExceptionHandlerTest {
     }
 
     @Test
-    void testNoContent() {
-        when(request.getContextPath()).thenReturn(CONTEXT);
-        var result = handler.handleNoContent(new Exception(MESSAGE), request);
-        var error = (ApiError)result.getBody();
-        Assertions.assertNotNull(error);
-        Assertions.assertEquals(HttpStatus.NO_CONTENT, error.getStatus());
-        Assertions.assertEquals(MESSAGE, error.getMessage());
-        Assertions.assertEquals(CONTEXT, error.getPath());
-        Assertions.assertNotNull(error.getTimestamp());
-    }
-
-    @Test
     void testNotFound() {
         when(request.getContextPath()).thenReturn(CONTEXT);
         var result = handler.handleNotFound(new Exception(MESSAGE), request);
