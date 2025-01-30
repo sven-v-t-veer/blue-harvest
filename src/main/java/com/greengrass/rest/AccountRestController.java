@@ -33,7 +33,6 @@ public class AccountRestController {
         this.handler = handler;
     }
 
-
     @ResponseStatus(HttpStatus.OK)
     @PostMapping({"/customer/{customerId}/account/", "/customer/{customerId}/account"})
     AccountDto createAccount(@PathVariable(name = "customerId") UUID customerId, @RequestParam(name = "initialCredit", required = false)BigDecimal initialCredit) throws CustomerNotFoundException, AccountNotFoundException {

@@ -11,7 +11,7 @@ https://sonarcloud.io/project/overview?id=sven-v-t-veer_green-grass
 
 api-docs can be found in the docs directory.
 
-to run locally:
+to run locally: (Requires Java 21)
 > gradle assemble
 > docker-compose build
 > docker-compose up
