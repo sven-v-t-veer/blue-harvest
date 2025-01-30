@@ -5,10 +5,12 @@ import com.blueharvest.service.TransactionService;
 import com.blueharvest.spi.Transaction;
 import com.blueharvest.spi.repository.TransactionRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
 @Component
+@Transactional
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactions;

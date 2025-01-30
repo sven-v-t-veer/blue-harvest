@@ -41,7 +41,7 @@ class CustomerRestControllerTest implements MvcResponseParser{
     @Test
     void testCustomerRestController() {
         var result = mvc.perform(
-                post("/api/customer/?name=sven&surName=Veer")
+                post("/api/customer/?name=sven&surname=Veer")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
@@ -51,7 +51,7 @@ class CustomerRestControllerTest implements MvcResponseParser{
         Assertions.assertThat(response)
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("name", "sven")
-                .hasFieldOrPropertyWithValue("surName", "Veer")
+                .hasFieldOrPropertyWithValue("surname", "Veer")
                 .hasFieldOrProperty("customerId");
         var customerId = response.getCustomerId();
         result = mvc.perform(

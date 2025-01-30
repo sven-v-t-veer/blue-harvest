@@ -21,8 +21,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer createCustomer(String name, String surName) {
-        return users.save(new Customer(name, surName));
+    public Customer createCustomer(String name, String surname) {
+        return users.save(new Customer(name, surname));
     }
 
     @Override

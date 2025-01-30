@@ -18,5 +18,5 @@ public class AccountDto {
     private UUID customerId;
     private String accountName;
     private BigDecimal balance;
-    private List<AccountDto> transactions = new ArrayList<>();
+    private List<TransactionDto> transactions = new ArrayList<>();
 }
