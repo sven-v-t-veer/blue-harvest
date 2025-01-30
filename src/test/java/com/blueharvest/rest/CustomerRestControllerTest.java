@@ -2,7 +2,6 @@ package com.blueharvest.rest;
 
 import com.blueharvest.BlueHarvestApp;
 import com.blueharvest.domain.CustomerDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,15 +12,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.IOException;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,13 +30,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = BlueHarvestApp.class)
-class CustomerRestControllerTest {
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+class CustomerRestControllerTest implements MvcResponseParser{
 
     @Autowired
     private MockMvc mvc;
 
-    @Autowired
-    private ObjectMapper mapper;
 
     @SneakyThrows
     @Test
@@ -69,15 +65,5 @@ class CustomerRestControllerTest {
                 .isNotNull()
                 .isEqualTo(response);
     }
-
-    public <T> T parseResponse(MvcResult result, Class<T> responseClass) {
-        try {
-            String contentAsString = result.getResponse().getContentAsString();
-            return mapper.readValue(contentAsString, responseClass);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
 }
