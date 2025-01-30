@@ -5,12 +5,14 @@ import com.blueharvest.spi.Account;
 import com.blueharvest.spi.Transaction;
 import com.blueharvest.spi.Customer;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -22,24 +24,31 @@ import java.util.List;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = BlueHarvestApp.class)
-public class CustomerRepositoryTest {
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+class CustomerRepositoryTest {
 
     @Autowired
     private CustomerRepository customers;
     @Autowired
     private AccountRepository accounts;
 
+    @BeforeEach
+    void setup() {
+        customers.deleteAll();
+        Assertions.assertThat(customers.count()).isZero();
+    }
+
     @Test
-    void testReporitory() {
+    void testRepository() {
         Assertions.assertThat(customers.count()).isZero();
         var user = new Customer();
         user.setName("user");
-        var saved = customers.save(user);
+        customers.save(user);
         Assertions.assertThat(customers.count()).isOne();
         var account = new Account();
         account.setBalance(BigDecimal.TEN);
         user.addAccount(account);
-        saved = customers.save(user);
+        var saved = customers.save(user);
         Assertions.assertThat(saved)
                 .isNotNull();
         List<Account> list = saved.getAccounts();
@@ -51,4 +60,5 @@ public class CustomerRepositoryTest {
         account = accounts.save(account);
         Assertions.assertThat(account.getBalance()).isEqualTo(new BigDecimal(10));
     }
+
 }

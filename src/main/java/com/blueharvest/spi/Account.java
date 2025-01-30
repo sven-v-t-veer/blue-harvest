@@ -12,13 +12,14 @@ import java.util.UUID;
 @Entity
 @Setter
 @Getter
+@SuppressWarnings("javaarchitecture:S7027") // Account has Customer
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID accountId;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Customer user;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
     private BigDecimal balance;
 
     @OneToMany(cascade = CascadeType.ALL)
