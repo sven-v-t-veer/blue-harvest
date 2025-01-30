@@ -41,6 +41,7 @@ jobs:
     - name: SonarQubeScan
       uses: SonarSource/sonarqube-scan-action@v4
       with:
+        projectBaseDir: .
         projectKey: sven-v-t-veer_green-grass
         sonar.organization: sven-v-t-veer
       env:
