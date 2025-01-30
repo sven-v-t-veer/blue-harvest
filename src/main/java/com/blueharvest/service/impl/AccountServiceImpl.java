@@ -1,7 +1,9 @@
 package com.blueharvest.service.impl;
 
+import com.blueharvest.domain.TransactionType;
 import com.blueharvest.exception.AccountNotFoundException;
 import com.blueharvest.exception.CustomerNotFoundException;
+import com.blueharvest.exception.InsufficientFundsException;
 import com.blueharvest.service.AccountService;
 import com.blueharvest.service.CustomerService;
 import com.blueharvest.spi.Account;
@@ -30,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
         var account = accounts.save(new Account(initialBalance));
         var accountId = account.getAccountId();
         if (initialBalance != null && !initialBalance.equals(BigDecimal.ZERO)) {
-            account.addTransaction(new Transaction("initial balance", initialBalance));
+            account.addTransaction(new Transaction(TransactionType.deposit, "initial balance", initialBalance));
             account = accounts.save(account);
         }
         var user = users.addAccount(customerId, account);
@@ -40,4 +42,36 @@ public class AccountServiceImpl implements AccountService {
                 .findAny()
                 .orElseThrow(() -> new AccountNotFoundException(accountId));
     }
+
+    @Override
+    public Account deposit(UUID customerId, UUID accountId, String description, BigDecimal amount) throws CustomerNotFoundException, AccountNotFoundException {
+        var account = getAccount(customerId, accountId);
+        var text = description != null ? description : "";
+        account.addTransaction(new Transaction(TransactionType.deposit, text, amount));
+        account.setBalance(account.getBalance().add(amount));
+        return accounts.save(account);
+    }
+
+    @Override
+    public Account withdraw(UUID customerId, UUID accountId, String description, BigDecimal amount) throws CustomerNotFoundException, AccountNotFoundException, InsufficientFundsException {
+        var account = getAccount(customerId, accountId);
+        if (amount.compareTo(account.getBalance()) < 0) {
+            throw new InsufficientFundsException(accountId);
+        }
+        var text = description != null ? description : "";
+        account.addTransaction(new Transaction(TransactionType.withdraw, text, amount));
+        account.setBalance(account.getBalance().subtract(amount));
+        return accounts.save(account);
+    }
+
+    Account getAccount(UUID customerId, UUID accountId) throws CustomerNotFoundException, AccountNotFoundException {
+        return users.getCustomer(customerId)
+                .getAccounts()
+                .stream()
+                .filter(a -> a.getAccountId().equals(accountId))
+                .findAny()
+                .orElseThrow(() -> new AccountNotFoundException(accountId));
+    }
+
+
 }
