@@ -19,13 +19,13 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID customerId;
     private String name;
-    private String surName;
+    private String surname;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Account> accounts;
 
-    public Customer(String name, String surName) {
+    public Customer(String name, String surname) {
         this.name = name;
-        this.surName = surName;
+        this.surname = surname;
     }
 
     public void addAccount(Account account) {

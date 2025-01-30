@@ -10,5 +10,5 @@ public interface CustomerService {
 
     Customer getCustomer(UUID customerId) throws CustomerNotFoundException;
     Customer addAccount(UUID customerId, Account account) throws CustomerNotFoundException;
-    Customer createCustomer(String name, String surName);
+    Customer createCustomer(String name, String surname);
 }
