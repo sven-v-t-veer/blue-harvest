@@ -1,8 +1,8 @@
 services:
-  blue-harvest:
+  green-grass:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: blue-harvest
+    container_name: green-grass
     ports:
       - "8080:8080"

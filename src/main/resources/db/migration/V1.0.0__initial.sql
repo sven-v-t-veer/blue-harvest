@@ -1,4 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS BLUEHARVEST;
+CREATE SCHEMA IF NOT EXISTS GREENGRASS;
 create table customer (
     customer_id uuid,
     name varchar(40) not null,
