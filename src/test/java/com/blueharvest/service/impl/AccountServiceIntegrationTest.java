@@ -41,7 +41,7 @@ class AccountServiceIntegrationTest {
 
     @Test
     void testCreateAccountNullInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
-        var user = users.createUser("test user");
+        var user = users.createUser("test user", "test user");
         var account = accounts.createAccount(user.getCustomerId(), null);
         Assertions.assertThat(account)
                 .isNotNull()
@@ -51,7 +51,7 @@ class AccountServiceIntegrationTest {
 
     @Test
     void testCreateAccountZeroInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
-        var user = users.createUser("test user");
+        var user = users.createUser("test user", "test user");
         var account = accounts.createAccount(user.getCustomerId(), BigDecimal.ZERO);
         Assertions.assertThat(account)
                 .isNotNull()
@@ -61,7 +61,7 @@ class AccountServiceIntegrationTest {
 
     @Test
     void testCreateAccountTenInitialBalance() throws CustomerNotFoundException, AccountNotFoundException {
-        var user = users.createUser("test user");
+        var user = users.createUser("test user", "test user");
         var account = accounts.createAccount(user.getCustomerId(), BigDecimal.TEN);
         Assertions.assertThat(account)
                 .isNotNull()
