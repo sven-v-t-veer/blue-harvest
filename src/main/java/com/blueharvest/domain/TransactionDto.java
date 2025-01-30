@@ -17,5 +17,4 @@ public class TransactionDto {
     private String description;
     private BigDecimal amount;
     private Instant ts;
-
 }
