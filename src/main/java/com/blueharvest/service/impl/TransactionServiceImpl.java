@@ -20,14 +20,14 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction deposit(String description, BigDecimal amount) {
         var text = description != null ? description : "";
-        var transaction = new Transaction(TransactionType.deposit, text, amount);
+        var transaction = new Transaction(TransactionType.DEPOSIT, text, amount);
         return transactions.save(transaction);
     }
 
     @Override
     public Transaction withdraw( String description, BigDecimal amount) {
         var text = description != null ? description : "";
-        var transaction = new Transaction(TransactionType.withdraw, text, amount);
+        var transaction = new Transaction(TransactionType.WITHDRAW, text, amount);
         return transactions.save(transaction);
     }
 

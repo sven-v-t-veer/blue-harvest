@@ -55,7 +55,7 @@ class CustomerRepositoryTest {
         Assertions.assertThat(list).hasSize(1);
         account = list.getFirst();
         Assertions.assertThat(account.getBalance()).isEqualTo(BigDecimal.TEN);
-        var balance = account.addTransaction(new Transaction(TransactionType.deposit, "description", BigDecimal.ONE));
+        var balance = account.addTransaction(new Transaction(TransactionType.DEPOSIT, "description", BigDecimal.ONE));
         Assertions.assertThat(balance).isEqualTo(new BigDecimal(10));
         account = accounts.save(account);
         Assertions.assertThat(account.getBalance()).isEqualTo(new BigDecimal(10));

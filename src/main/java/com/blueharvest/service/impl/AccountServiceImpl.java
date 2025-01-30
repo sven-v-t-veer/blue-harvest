@@ -35,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
         var account = accounts.save(new Account(initialBalance));
         var accountId = account.getAccountId();
         if (initialBalance != null && !initialBalance.equals(BigDecimal.ZERO)) {
-            account.addTransaction(new Transaction(TransactionType.deposit, "initial balance", initialBalance));
+            account.addTransaction(new Transaction(TransactionType.DEPOSIT, "initial balance", initialBalance));
             account = accounts.save(account);
         }
         var user = users.addAccount(customerId, account);

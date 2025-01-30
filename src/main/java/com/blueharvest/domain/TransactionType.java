@@ -1,5 +1,16 @@
 package com.blueharvest.domain;
 
+
+import lombok.Getter;
+
+@Getter
 public enum TransactionType {
-    deposit, withdraw
+    DEPOSIT("deposit"), WITHDRAW("withdraw");
+
+    final String value;
+
+    TransactionType(String value) {
+        this.value = value;
+    }
+
 }
