@@ -5,6 +5,7 @@ import com.blueharvest.spi.Account;
 import com.blueharvest.spi.Transaction;
 import com.blueharvest.spi.Customer;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ class CustomerRepositoryTest {
     @Autowired
     private AccountRepository accounts;
 
+    @BeforeEach
+    void setup() {
+        customers.deleteAll();
+        Assertions.assertThat(customers.count()).isZero();
+    }
+
     @Test
     void testRepository() {
         Assertions.assertThat(customers.count()).isZero();
@@ -53,4 +60,5 @@ class CustomerRepositoryTest {
         account = accounts.save(account);
         Assertions.assertThat(account.getBalance()).isEqualTo(new BigDecimal(10));
     }
+
 }
