@@ -40,6 +40,9 @@ jobs:
 
     - name: SonarQubeScan
       uses: SonarSource/sonarqube-scan-action@v4
+      with:
+        projectKey: sven-v-t-veer_green-grass
+        sonar.organization: sven-v-t-veer
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
