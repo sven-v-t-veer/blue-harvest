@@ -64,6 +64,20 @@ class CustomerRestControllerTest implements MvcResponseParser{
         Assertions.assertThat(r2)
                 .isNotNull()
                 .isEqualTo(response);
+
+        // uuid unknown
+        mvc.perform(
+                get("/api/customer/50146069-315d-47b8-8759-d1a1e5d510e4")
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+        // not a uuid
+        mvc.perform(
+                get("/api/customer/not_a_uuid")
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
     }
 
 }
