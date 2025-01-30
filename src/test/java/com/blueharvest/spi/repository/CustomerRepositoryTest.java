@@ -41,14 +41,13 @@ class CustomerRepositoryTest {
     @Test
     void testRepository() {
         Assertions.assertThat(customers.count()).isZero();
-        var user = new Customer();
-        user.setName("user");
-        customers.save(user);
+        var customer = new Customer("name", "surname");
+        customers.save(customer);
         Assertions.assertThat(customers.count()).isOne();
         var account = new Account();
         account.setBalance(BigDecimal.TEN);
-        user.addAccount(account);
-        var saved = customers.save(user);
+        customer.addAccount(account);
+        var saved = customers.save(customer);
         Assertions.assertThat(saved)
                 .isNotNull();
         List<Account> list = saved.getAccounts();

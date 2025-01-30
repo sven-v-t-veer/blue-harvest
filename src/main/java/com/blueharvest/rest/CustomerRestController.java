@@ -32,8 +32,8 @@ public class CustomerRestController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping({"/customer/", "/customer"})
-    CustomerDto createCustomer(@RequestParam(name = "userName") String userName) {
-        return customerDataMapper.map(customers.createUser(userName));
+    CustomerDto createCustomer(@RequestParam(name = "name") String name, @RequestParam(name = "surName") String surName) {
+        return customerDataMapper.map(customers.createUser(name, surName));
     }
 
     @ResponseStatus(HttpStatus.OK)

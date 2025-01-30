@@ -2,6 +2,7 @@ CREATE SCHEMA IF NOT EXISTS BLUEHARVEST;
 create table customer (
     customer_id uuid,
     name varchar(40) not null,
+    sur_name varchar(40) not null,
     primary key (customer_id)
 );
 

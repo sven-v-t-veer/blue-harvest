@@ -18,6 +18,7 @@ import java.util.UUID;
 public class CustomerDto {
     private UUID customerId;
     private String name;
+    private String surName;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<AccountDto> accounts = new ArrayList<>();
 }
